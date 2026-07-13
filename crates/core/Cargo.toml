@@ -1,0 +1,26 @@
+[package]
+name = "api_clients_core"
+version = "0.2.1"
+description = "core API clients features for various services"
+readme = "README.md"
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[dependencies]
+thiserror.workspace = true
+serde_json.workspace = true
+serde.workspace = true
+reqwest.workspace = true
+reqwest-retry.workspace = true
+reqwest-middleware.workspace = true
+log.workspace = true
+serde_qs.workspace = true
+derive_setters.workspace = true
+tokio = { workspace = true, features = ["sync", "time"] }
+async-trait.workspace = true
+http.workspace = true
+
+[dev-dependencies]
+tokio = { workspace = true, features = ["macros", "rt", "test-util"] }

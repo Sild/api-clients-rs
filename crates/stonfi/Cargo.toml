@@ -1,0 +1,30 @@
+[package]
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+name = "stonfi_api_client"
+version = "0.8.0"
+description = "API client for Stonfi"
+
+
+[dependencies]
+# Internal
+api_clients_core.workspace = true
+
+# External
+serde.workspace = true
+log.workspace = true
+serde_derive.workspace = true
+serde_with.workspace = true
+derive_setters.workspace = true
+derive_more.workspace = true
+
+
+
+[dev-dependencies]
+tokio.workspace = true
+tokio-test.workspace = true
+env_logger.workspace = true
+anyhow.workspace = true
+serde_json.workspace = true

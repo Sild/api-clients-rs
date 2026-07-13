@@ -31,6 +31,8 @@ jobs:
       - run: cargo test --workspace --doc
       - run: cargo clippy --all-targets --all-features -- -D warnings
       - run: RUSTDOCFLAGS="-D warnings" cargo doc --workspace --no-deps
+      - name: Audit dependencies, licenses, and sources
+        uses: EmbarkStudios/cargo-deny-action@3c6349835b2b7b196a839186cb8b78e02f7b5f25
       - name: Verify package contents
         run: |
           for package in \
@@ -38,8 +40,17 @@ jobs:
             stonfi_api_client \
             dedust_api_client \
             swap_coffee_api_client \
-            tonco_api_client \
-            bidask_api_client
+            tonco_api_client
           do
             cargo package --list -p "$package"
           done
+
+  msrv:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Install MSRV toolchain
+        uses: dtolnay/rust-toolchain@1.88.0
+      - uses: Swatinem/rust-cache@v2
+      - run: cargo check --workspace --all-targets --all-features
