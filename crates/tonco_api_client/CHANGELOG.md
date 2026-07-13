@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.0](https://github.com/Sild/api_clients_rs/compare/tonco_api_client-v0.1.0...tonco_api_client-v0.2.0) - 2026-07-13
+
+### Other
+
+- Restruct crates ([#44](https://github.com/Sild/api_clients_rs/pull/44))
+
 ## [0.0.5](https://github.com/Sild/api_clients_rs/compare/tonco_api_client-v0.0.4...tonco_api_client-v0.0.5) - 2025-11-05
 
 ### Other

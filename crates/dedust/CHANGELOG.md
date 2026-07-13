@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.7.0](https://github.com/Sild/api_clients_rs/compare/dedust_api_client-v0.6.1...dedust_api_client-v0.7.0) - 2026-07-13
+
+### Other
+
+- Restruct crates ([#44](https://github.com/Sild/api_clients_rs/pull/44))
+
 ## [0.6.1](https://github.com/Sild/api_clients_rs/compare/dedust_api_client-v0.6.0...dedust_api_client-v0.6.1) - 2025-11-05
 
 ### Other
