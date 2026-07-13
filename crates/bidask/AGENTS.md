@@ -60,9 +60,9 @@ asks to revive Bidask support.
 ## Validation
 
 ```bash
-cargo test -p bidask --tests
+cargo test -p bidask_api_client --tests
 cargo +nightly fmt
-cargo clippy -p bidask --all-targets --all-features -- -D warnings
-RUSTDOCFLAGS="-D warnings" cargo doc -p bidask --no-deps
-cargo package --list -p bidask
+cargo clippy -p bidask_api_client --all-targets --all-features -- -D warnings
+RUSTDOCFLAGS="-D warnings" cargo doc -p bidask_api_client --no-deps
+cargo package --list -p bidask_api_client
 ```

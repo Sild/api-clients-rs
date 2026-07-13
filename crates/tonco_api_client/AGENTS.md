@@ -54,8 +54,8 @@ use tonco_api_client::api_client::ToncoApiClient;
 
 #[derive(GraphQLQuery)]
 #[graphql(
-    schema_path = "tonco_api_client/src/graphql_schema.json",
-    query_path = "tonco_api_client/tests/pools.graphql",
+    schema_path = "crates/tonco_api_client/src/graphql_schema.json",
+    query_path = "crates/tonco_api_client/tests/pools.graphql",
     response_derives = "Debug"
 )]
 pub struct Pools;

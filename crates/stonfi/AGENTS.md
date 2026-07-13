@@ -52,9 +52,9 @@ proves the request path, method, params, and response parsing.
 
 ## Live API Notes
 
-Tests in `tests/test_api.rs` hit the live STON.fi API. STON.fi asset metadata
-and historical transaction fixtures can drift. Verify the live response before
-changing client code.
+Tests in `tests/test_api_v1.rs` and `tests/test_export.rs` hit the live STON.fi
+API. Asset metadata and historical transaction fixtures can drift. Verify the
+live response before changing client code.
 
 Known recent contract observations:
 
@@ -91,9 +91,9 @@ status, and optional transaction IDs as live external data.
 ## Validation
 
 ```bash
-cargo test -p stonfi --tests
+cargo test -p stonfi_api_client --tests
 cargo +nightly fmt
-cargo clippy -p stonfi --all-targets --all-features -- -D warnings
-RUSTDOCFLAGS="-D warnings" cargo doc -p stonfi --no-deps
-cargo package --list -p stonfi
+cargo clippy -p stonfi_api_client --all-targets --all-features -- -D warnings
+RUSTDOCFLAGS="-D warnings" cargo doc -p stonfi_api_client --no-deps
+cargo package --list -p stonfi_api_client
 ```

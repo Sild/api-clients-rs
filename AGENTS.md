@@ -14,15 +14,18 @@ Root guidance applies to the whole workspace. Also read the crate-local
 
 ## Workspace Crates
 
-- `api_clients_core` (`core/`): shared HTTP executor, retry setup, and common
-  error/result types.
-- `stonfi_api_client`: REST wrapper for STON.fi API v1 and public export endpoints.
-- `dedust_api_client`: REST wrapper for DeDust API v2.
-- `swap_coffee_api_client`: REST wrapper for Swap Coffee API v1.
-- `tonco_api_client`: GraphQL wrapper for Tonco Indexer.
-- `bidask_api_client`: unsupported legacy Bidask crate; it is intentionally
-  excluded from publishing and should not be recommended for final-app
-  integration.
+- `api_clients_core` (`crates/core/`): shared HTTP executor, retry setup, and
+  common error/result types.
+- `stonfi_api_client` (`crates/stonfi/`): REST wrapper for STON.fi API v1 and
+  public export endpoints.
+- `dedust_api_client` (`crates/dedust/`): REST wrapper for DeDust API v2.
+- `swap_coffee_api_client` (`crates/swap_coffee/`): REST wrapper for Swap Coffee
+  API v1.
+- `tonco_api_client` (`crates/tonco_api_client/`): GraphQL wrapper for Tonco
+  Indexer.
+- `bidask_api_client` (`crates/bidask/`): unsupported legacy Bidask crate; it is
+  intentionally excluded from publishing and should not be recommended for
+  final-app integration.
 
 ## Project Goals
 

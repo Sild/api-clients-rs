@@ -77,9 +77,9 @@ their own domain layer.
 ## Validation
 
 ```bash
-cargo test -p dedust --tests
+cargo test -p dedust_api_client --tests
 cargo +nightly fmt
-cargo clippy -p dedust --all-targets --all-features -- -D warnings
-RUSTDOCFLAGS="-D warnings" cargo doc -p dedust --no-deps
-cargo package --list -p dedust
+cargo clippy -p dedust_api_client --all-targets --all-features -- -D warnings
+RUSTDOCFLAGS="-D warnings" cargo doc -p dedust_api_client --no-deps
+cargo package --list -p dedust_api_client
 ```
