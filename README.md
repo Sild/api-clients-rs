@@ -23,9 +23,11 @@ Add the crate for the service you need:
 
 ```toml
 [dependencies]
-stonfi_api_client = "0.8"
+stonfi_api_client = "0.9"
 tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
 ```
+
+The workspace minimum supported Rust version (MSRV) is 1.88.
 
 Then build a client and execute the typed request in an async Tokio runtime:
 

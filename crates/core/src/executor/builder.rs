@@ -35,6 +35,12 @@ impl Builder {
         }
     }
 
+    /// Build the configured [`Executor`].
+    ///
+    /// # Errors
+    ///
+    /// Returns [`ApiClientsError::Internal`] if the underlying HTTP client
+    /// cannot be constructed.
     pub fn build(self) -> ApiClientsResult<Executor> {
         let rate_limit = RateLimitMiddleware::new(self.max_rps);
         let http_client = match self.http_client {

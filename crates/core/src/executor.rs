@@ -30,6 +30,12 @@ impl Executor {
     /// accepted and causes requests to wait indefinitely instead of being sent.
     pub fn builder<T: Into<String>>(api_endpoint: T) -> Builder { Builder::new(api_endpoint.into()) }
 
+    /// Execute a GET request without additional query parameters or headers.
+    ///
+    /// # Errors
+    ///
+    /// Returns [`ApiClientsError`](crate::ApiClientsError) when the request
+    /// fails or the response cannot be deserialized as `RESPONSE`.
     pub async fn exec_get<RESPONSE>(&self, path: &str) -> ApiClientsResult<RESPONSE>
     where
         RESPONSE: de::DeserializeOwned,
@@ -37,6 +43,13 @@ impl Executor {
         self.exec_get_extra(path, &serde_json::Value::Null, &[]).await
     }
 
+    /// Execute a GET request with serialized query parameters and headers.
+    ///
+    /// # Errors
+    ///
+    /// Returns [`ApiClientsError`](crate::ApiClientsError) when parameters
+    /// cannot be serialized, the request fails, or the response cannot be
+    /// deserialized as `RESPONSE`.
     pub async fn exec_get_extra<PARAMS, RESPONSE>(
         &self,
         path: &str,
@@ -59,7 +72,13 @@ impl Executor {
         handle_response(request_builder.send().await?).await
     }
 
-    // put params as query string
+    /// Execute a POST request with parameters encoded in the query string.
+    ///
+    /// # Errors
+    ///
+    /// Returns [`ApiClientsError`](crate::ApiClientsError) when parameters
+    /// cannot be serialized, the request fails, or the response cannot be
+    /// deserialized as `RESPONSE`.
     pub async fn exec_post_qs<PARAMS, RESPONSE>(
         &self,
         path: &str,
@@ -82,7 +101,13 @@ impl Executor {
         handle_response(request_builder.send().await?).await
     }
 
-    // put params as body in json format
+    /// Execute a POST request with parameters serialized as a JSON body.
+    ///
+    /// # Errors
+    ///
+    /// Returns [`ApiClientsError`](crate::ApiClientsError) when parameters
+    /// cannot be serialized, the request fails, or the response cannot be
+    /// deserialized as `RESPONSE`.
     pub async fn exec_post_body<PARAMS, RESPONSE>(
         &self,
         path: &str,

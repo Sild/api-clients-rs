@@ -1,3 +1,8 @@
+//! Raw STON.fi export request variants and query parameters.
+//!
+//! Names and fields intentionally mirror the upstream wire contract.
+#![allow(missing_docs, reason = "raw request models mirror the upstream API contract")]
+
 use derive_more::From;
 use derive_setters::Setters;
 use serde_derive::Serialize;

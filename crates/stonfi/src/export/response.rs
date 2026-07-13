@@ -1,3 +1,8 @@
+//! Raw STON.fi export response variants.
+//!
+//! Names and fields intentionally mirror the upstream wire contract.
+#![allow(missing_docs, reason = "raw response models mirror the upstream API contract")]
+
 use crate::export::types::{CmcPoolStats, DexscreenerAsset, DexscreenerBlock, DexscreenerEvent, DexscreenerPair};
 use derive_more::From;
 use derive_setters::Setters;

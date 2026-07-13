@@ -1,3 +1,8 @@
+//! Raw DeDust API v2 wire types.
+//!
+//! Names and fields intentionally mirror the upstream response schema.
+#![allow(missing_docs, reason = "raw wire types mirror the upstream API contract")]
+
 use derive_setters::Setters;
 use serde::Deserialize;
 use serde_derive::Serialize;

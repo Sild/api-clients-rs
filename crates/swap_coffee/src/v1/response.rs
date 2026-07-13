@@ -1,3 +1,8 @@
+//! Raw Swap Coffee API v1 response variants.
+//!
+//! Names and fields intentionally mirror the upstream wire contract.
+#![allow(missing_docs, reason = "raw response models mirror the upstream API contract")]
+
 use crate::v1::types::*;
 use derive_more::From;
 use derive_setters::Setters;

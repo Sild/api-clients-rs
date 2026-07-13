@@ -12,9 +12,11 @@ workflows, persistence, and fallback behavior.
 
 ```toml
 [dependencies]
-stonfi_api_client = "0.8"
+stonfi_api_client = "0.9"
 tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
 ```
+
+The minimum supported Rust version (MSRV) is 1.88.
 
 Run requests inside an async Tokio runtime. Pass request parameter structs
 directly where `Into<V1Request>` or `Into<ExportRequest>` is implemented, and

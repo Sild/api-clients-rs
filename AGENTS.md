@@ -62,6 +62,10 @@ release-plz in CI. Do not treat unchanged crate versions on a feature branch as
 a release-readiness finding unless the user explicitly asks for a manual
 release-prep change.
 
+The workspace MSRV is Rust 1.88. Dependency changes must preserve it and pass
+the dedicated MSRV CI job. The release workflow must refuse to process a
+default-branch commit other than the exact SHA that completed `Build-Test`.
+
 Public structs and enums are generally marked `#[non_exhaustive]` to preserve
 semver headroom for new fields and variants. Use
 `Default::default().with_<field>(...)` or request parameter constructors in
@@ -186,8 +190,12 @@ cargo test -p <changed-crate> --tests
 cargo test
 cargo +nightly fmt
 cargo clippy --all-targets --all-features -- -D warnings
+cargo +1.88.0 check --workspace --all-targets --all-features
+cargo deny check
 git diff --check
 ```
 
 Use `RUSTDOCFLAGS="-D warnings" cargo doc --no-deps` when rustdoc or public API
-documentation changed.
+documentation changed. Use `cargo semver-checks check-release --workspace` for
+intentional breaking releases and review the release-plz version bumps plus all
+README dependency snippets before publishing.

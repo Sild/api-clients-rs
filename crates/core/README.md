@@ -26,9 +26,11 @@ request timeout, and applies a smooth 10 RPS client-side rate limit.
 
 ```toml
 [dependencies]
-api_clients_core = "0.2"
+api_clients_core = "0.3"
 tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
 ```
+
+The minimum supported Rust version (MSRV) is 1.88.
 
 ```rust,no_run
 use api_clients_core::{ApiClientsError, Executor};
@@ -59,7 +61,7 @@ fn classify_error(err: ApiClientsError) -> &'static str {
     match err {
         ApiClientsError::Client(_, _) => "client",
         ApiClientsError::Server(_, _) => "server",
-        ApiClientsError::Network(_, _) => "network",
+        ApiClientsError::Network(_) => "network",
         ApiClientsError::UnexpectedResponse(_) => "unexpected-response",
         _ => "other",
     }

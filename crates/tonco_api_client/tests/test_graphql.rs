@@ -1,9 +1,10 @@
+use anyhow::Context;
 use graphql_client::GraphQLQuery;
 use tonco_api_client::api_client::ToncoApiClient;
 
-fn init_env() -> ToncoApiClient {
+fn init_env() -> anyhow::Result<ToncoApiClient> {
     let _ = env_logger::builder().filter_level(log::LevelFilter::Debug).try_init();
-    ToncoApiClient::builder().build().unwrap()
+    Ok(ToncoApiClient::builder().build()?)
 }
 
 // Use the following commands to update `graphql_schema.json`:
@@ -20,12 +21,11 @@ pub struct Pools;
 // example of using graphql_client to generate query
 #[tokio::test]
 async fn test_tonco_pools() -> anyhow::Result<()> {
-    let client = init_env();
+    let client = init_env()?;
     let query = Pools::build_query(pools::Variables);
     let response: pools::ResponseData = client.graphql.exec(pools::OPERATION_NAME, &query).await?;
-    assert!(response.pools.is_some());
-    let pools = response.pools.unwrap();
+    let pools = response.pools.context("Tonco response did not include pools")?;
     assert!(!pools.is_empty());
-    assert!(pools[0].is_some());
+    assert!(pools.first().is_some_and(Option::is_some));
     Ok(())
 }

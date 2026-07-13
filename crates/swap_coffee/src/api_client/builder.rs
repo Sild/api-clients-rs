@@ -4,6 +4,7 @@ use api_clients_core::{ApiClientsResult, Executor};
 use derive_setters::Setters;
 use std::sync::Arc;
 
+/// Builder for [`SwapCoffeeApiClient`].
 #[derive(Setters)]
 #[setters(prefix = "with_", strip_option)]
 #[non_exhaustive]
@@ -20,6 +21,11 @@ impl Builder {
         }
     }
 
+    /// Build the configured Swap Coffee client.
+    ///
+    /// # Errors
+    ///
+    /// Returns an error if the shared executor cannot be constructed.
     pub fn build(self) -> ApiClientsResult<SwapCoffeeApiClient> {
         let executor = match self.executor {
             Some(executor) => executor,

@@ -9,6 +9,7 @@ pub use request::*;
 pub use response::*;
 pub use types::*;
 
+/// Executes typed requests against STON.fi API v1.
 #[derive(Clone)]
 pub struct V1ApiClient {
     executor: Arc<Executor>,
@@ -18,6 +19,12 @@ impl V1ApiClient {
     pub(crate) fn new(executor: Arc<Executor>) -> Self { Self { executor } }
 
     #[rustfmt::skip]
+    /// Execute a STON.fi v1 request and return its matching response variant.
+    ///
+    /// # Errors
+    ///
+    /// Returns an error when request serialization, transport, status handling,
+    /// or response deserialization fails.
     pub async fn exec<REQUEST>(&self, request: REQUEST) -> ApiClientsResult<V1Response>
     where
         REQUEST: Into<V1Request>,

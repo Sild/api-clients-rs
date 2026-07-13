@@ -1,3 +1,8 @@
+//! Raw Swap Coffee API v1 wire types.
+//!
+//! Names and fields intentionally mirror the upstream response schema.
+#![allow(missing_docs, reason = "raw wire types mirror the upstream API contract")]
+
 use core::str;
 
 use derive_setters::Setters;

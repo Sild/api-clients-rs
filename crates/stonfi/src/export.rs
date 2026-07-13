@@ -9,6 +9,7 @@ pub use request::*;
 pub use response::*;
 pub use types::*;
 
+/// Executes typed requests against STON.fi public export feeds.
 #[derive(Clone)]
 pub struct ExportApiClient {
     executor: Arc<Executor>,
@@ -17,6 +18,12 @@ pub struct ExportApiClient {
 impl ExportApiClient {
     pub(crate) fn new(executor: Arc<Executor>) -> Self { Self { executor } }
 
+    /// Execute an export-feed request and return its matching response variant.
+    ///
+    /// # Errors
+    ///
+    /// Returns an error when request serialization, transport, status handling,
+    /// or response deserialization fails.
     pub async fn exec<REQUEST>(&self, request: REQUEST) -> ApiClientsResult<ExportResponse>
     where
         REQUEST: Into<ExportRequest>,

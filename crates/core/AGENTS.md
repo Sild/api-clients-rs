@@ -49,8 +49,9 @@ reviewing every service crate and downstream integration guidance.
   with a trailing `?`.
 - All successful responses are parsed as JSON. Non-JSON success bodies become
   `ApiClientsError::UnexpectedResponse`.
-- 4xx responses map to `Client`; 5xx responses map to `Server`; other reqwest
-  errors map through the reqwest conversions.
+- 4xx responses map to `Client`; 5xx responses map to `Server`; status-less
+  connect, timeout, request, and body errors map to `Network`; other reqwest or
+  middleware errors map to `Unknown`.
 - Built executors rate-limit outbound HTTP attempts to 10 RPS by default. The
   limiter is smooth/no-burst and is installed after retry middleware so retries
   reserve their own slots.
@@ -75,6 +76,7 @@ For this crate:
 
 ```bash
 cargo test -p api_clients_core
+cargo +1.88.0 check -p api_clients_core --all-targets --all-features
 cargo +nightly fmt
 cargo clippy -p api_clients_core --all-targets --all-features -- -D warnings
 RUSTDOCFLAGS="-D warnings" cargo doc -p api_clients_core --no-deps

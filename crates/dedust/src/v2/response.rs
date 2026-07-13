@@ -1,3 +1,8 @@
+//! Raw DeDust API v2 response variants.
+//!
+//! Names and fields intentionally mirror the upstream wire contract.
+#![allow(missing_docs, reason = "raw response models mirror the upstream API contract")]
+
 use crate::v2::types::*;
 use derive_more::From;
 use serde_derive::Deserialize;

@@ -12,10 +12,12 @@ swap APIs.
 
 ```toml
 [dependencies]
-tonco_api_client = "0.1"
+tonco_api_client = "0.2"
 serde = { version = "1", features = ["derive"] }
 tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
 ```
+
+The minimum supported Rust version (MSRV) is 1.88.
 
 Run requests inside an async Tokio runtime. `client.graphql.exec` sends the
 `x-apollo-operation-name` header, unwraps GraphQL `data`, and maps GraphQL

@@ -1,3 +1,8 @@
+//! Raw STON.fi API v1 wire types.
+//!
+//! Names and fields intentionally mirror the upstream response schema.
+#![allow(missing_docs, reason = "raw wire types mirror the upstream API contract")]
+
 use derive_setters::Setters;
 use serde_derive::{Deserialize, Serialize};
 use std::collections::BTreeMap;

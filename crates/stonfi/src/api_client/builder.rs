@@ -5,6 +5,7 @@ use api_clients_core::{ApiClientsResult, Executor};
 use derive_setters::Setters;
 use std::sync::Arc;
 
+/// Builder for [`StonfiApiClient`].
 #[derive(Setters)]
 #[setters(prefix = "with_", strip_option)]
 #[non_exhaustive]
@@ -25,6 +26,11 @@ impl Builder {
         }
     }
 
+    /// Build the configured STON.fi client.
+    ///
+    /// # Errors
+    ///
+    /// Returns an error if either shared executor cannot be constructed.
     pub fn build(self) -> ApiClientsResult<StonfiApiClient> {
         let executor = match self.executor {
             Some(executor) => executor,

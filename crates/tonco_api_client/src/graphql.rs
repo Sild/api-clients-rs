@@ -3,6 +3,7 @@ use graphql_client::Response;
 use serde::{de, ser};
 use std::sync::Arc;
 
+/// Executes caller-provided GraphQL operations against the Tonco Indexer.
 #[derive(Clone)]
 pub struct GraphqlApiClient {
     executor: Arc<Executor>,
@@ -11,6 +12,15 @@ pub struct GraphqlApiClient {
 impl GraphqlApiClient {
     pub(crate) fn new(executor: Arc<Executor>) -> Self { Self { executor } }
 
+    /// Execute a serialized GraphQL request and extract its `data` payload.
+    ///
+    /// The operation name is sent through the `x-apollo-operation-name` header.
+    ///
+    /// # Errors
+    ///
+    /// Returns an error when serialization or transport fails, when GraphQL
+    /// returns errors, when `data` is absent, or when the payload cannot be
+    /// deserialized as `RSP`.
     pub async fn exec<PARAMS, RSP>(&self, op_name: &str, graphql_query: &PARAMS) -> ApiClientsResult<RSP>
     where
         PARAMS: ser::Serialize,

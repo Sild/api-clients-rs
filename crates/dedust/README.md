@@ -10,9 +10,11 @@ slippage, execute swaps, or normalize DeDust data into a shared DEX domain model
 
 ```toml
 [dependencies]
-dedust_api_client = "0.6"
+dedust_api_client = "0.7"
 tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
 ```
+
+The minimum supported Rust version (MSRV) is 1.88.
 
 Run requests inside an async Tokio runtime. Pass request parameter structs
 directly where `Into<V2Request>` is implemented, and match response enums with a

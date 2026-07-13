@@ -9,6 +9,7 @@ pub use request::*;
 pub use response::*;
 pub use types::*;
 
+/// Executes typed requests against DeDust API v2.
 #[derive(Clone)]
 pub struct V2ApiClient {
     executor: Arc<Executor>,
@@ -17,6 +18,12 @@ pub struct V2ApiClient {
 impl V2ApiClient {
     pub(crate) fn new(executor: Arc<Executor>) -> Self { Self { executor } }
 
+    /// Execute a DeDust v2 request and return its matching response variant.
+    ///
+    /// # Errors
+    ///
+    /// Returns an error when request serialization, transport, status handling,
+    /// or response deserialization fails.
     pub async fn exec<REQUEST>(&self, request: REQUEST) -> ApiClientsResult<V2Response>
     where
         REQUEST: Into<V2Request>,

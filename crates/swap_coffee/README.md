@@ -10,9 +10,11 @@ trade-safety policy; keep those decisions in the application layer.
 
 ```toml
 [dependencies]
-swap_coffee_api_client = "0.1"
+swap_coffee_api_client = "0.2"
 tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
 ```
+
+The minimum supported Rust version (MSRV) is 1.88.
 
 Run requests inside an async Tokio runtime. Pass request parameter structs
 directly where `Into<V1Request>` is implemented, and match response enums with a
