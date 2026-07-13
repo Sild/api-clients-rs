@@ -72,9 +72,9 @@ checks outside this crate.
 ## Validation
 
 ```bash
-cargo test -p swap_coffee_api_client --tests
+cargo test -p swap_coffee --tests
 cargo +nightly fmt
-cargo clippy -p swap_coffee_api_client --all-targets --all-features -- -D warnings
-RUSTDOCFLAGS="-D warnings" cargo doc -p swap_coffee_api_client --no-deps
-cargo package --list -p swap_coffee_api_client
+cargo clippy -p swap_coffee --all-targets --all-features -- -D warnings
+RUSTDOCFLAGS="-D warnings" cargo doc -p swap_coffee --no-deps
+cargo package --list -p swap_coffee
 ```

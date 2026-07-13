@@ -2,12 +2,12 @@
 resolver = "2"
 
 members = [
-    "core",
-    "dedust_api_client",
-    "stonfi_api_client",
-    "swap_coffee_api_client",
-    "tonco_api_client",
-    "bidask_api_client",
+    "crates/core",
+    "crates/dedust",
+    "crates/stonfi",
+    "crates/swap_coffee",
+    "crates/tonco_api_client",
+    "crates/bidask",
 ]
 
 [workspace.package]
@@ -17,7 +17,7 @@ repository = "https://github.com/Sild/api_clients_rs"
 
 [workspace.dependencies]
 # Internal
-api_clients_core = { path = "core", version = "0.2" }
+api_clients_core = { path = "crates/core", version = "0.2" }
 
 # External
 thiserror = "2.0"

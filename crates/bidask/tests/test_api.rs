@@ -1,12 +1,12 @@
 // Bidask support is disabled for this workspace. Keep the live API test
-// commented out while `bidask_api_client` remains unsupported and unpublished.
+// commented out while `bidask` remains unsupported and unpublished.
 //
 // use std::vec;
 //
 // use anyhow::Result;
-// use bidask_api_client::api::Request;
-// use bidask_api_client::api_client::BidaskApiClient;
-// use bidask_api_client::unwrap_response;
+// use bidask::api::Request;
+// use bidask::api_client::BidaskApiClient;
+// use bidask::unwrap_response;
 //
 // fn init_env() -> BidaskApiClient {
 //     let _ = env_logger::builder().filter_level(log::LevelFilter::Debug).try_init();

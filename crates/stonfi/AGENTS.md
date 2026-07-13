@@ -91,9 +91,9 @@ status, and optional transaction IDs as live external data.
 ## Validation
 
 ```bash
-cargo test -p stonfi_api_client --tests
+cargo test -p stonfi --tests
 cargo +nightly fmt
-cargo clippy -p stonfi_api_client --all-targets --all-features -- -D warnings
-RUSTDOCFLAGS="-D warnings" cargo doc -p stonfi_api_client --no-deps
-cargo package --list -p stonfi_api_client
+cargo clippy -p stonfi --all-targets --all-features -- -D warnings
+RUSTDOCFLAGS="-D warnings" cargo doc -p stonfi --no-deps
+cargo package --list -p stonfi
 ```

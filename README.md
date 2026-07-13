@@ -8,11 +8,11 @@ MRs are welcome.
 
 | Service                | Client                                             | Status      | Capabilities |
 |------------------------|----------------------------------------------------|-------------|--------------|
-| https://ston.fi        | [stonfi_api_client](stonfi_api_client)             | Supported   | STON.fi API v1 assets, pools, farms, routers, swap/liquidity simulation, wallet views, stats, transactions, and public export feeds. |
-| https://dedust.io      | [dedust_api_client](dedust_api_client)             | Supported   | DeDust API v2 assets, pools, pool trades, and routing plans. |
-| https://app.tonco.io/  | [tonco_api_client](tonco_api_client)               | Supported   | Low-level Tonco Indexer GraphQL execution with caller-owned query/schema files and generated types. |
-| https://swap.coffee    | [swap_coffee_api_client](swap_coffee_api_client)   | Supported   | Swap Coffee API v1 tokens and pools. |
-| Bidask                 | [bidask_api_client](bidask_api_client)             | Unsupported | Legacy source only; not recommended for application integration and not published. |
+| https://ston.fi        | [stonfi_api_client](crates/stonfi)             | Supported   | STON.fi API v1 assets, pools, farms, routers, swap/liquidity simulation, wallet views, stats, transactions, and public export feeds. |
+| https://dedust.io      | [dedust_api_client](crates/dedust)             | Supported   | DeDust API v2 assets, pools, pool trades, and routing plans. |
+| https://app.tonco.io/  | [tonco_api_client](crates/tonco_api_client)               | Supported   | Low-level Tonco Indexer GraphQL execution with caller-owned query/schema files and generated types. |
+| https://swap.coffee    | [swap_coffee_api_client](crates/swap_coffee)   | Supported   | Swap Coffee API v1 tokens and pools. |
+| Bidask                 | [bidask_api_client](crates/bidask)             | Unsupported | Legacy source only; not recommended for application integration and not published. |
 
 
 If you're interested in some particular endpoint which is not implemented yet, just raise an issue and I'll add it.
