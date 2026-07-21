@@ -10,7 +10,7 @@ use serde::{Deserialize, Serialize};
 #[setters(prefix = "with_")]
 #[serde(rename_all = "camelCase")]
 #[non_exhaustive]
-pub struct Asset {
+pub struct PublicToken {
     pub symbol: String,
     pub address: String,
     pub buy_tax: u16,

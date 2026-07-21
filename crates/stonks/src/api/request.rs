@@ -11,21 +11,21 @@ use serde::Serialize;
 #[non_exhaustive]
 pub enum Request {
     #[from(skip)]
-    Assets,
-    Pools(PoolsParams),
+    PublicTokens,
+    VirtualPoolAddresses(VirtualPoolAddressesParams),
     #[from(skip)]
-    AllPools,
+    AllVirtualPoolAddresses,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Eq, Serialize, Setters)]
 #[setters(prefix = "with_")]
 #[non_exhaustive]
-pub struct PoolsParams {
+pub struct VirtualPoolAddressesParams {
     pub page: usize,
     pub size: usize,
 }
 
-impl PoolsParams {
+impl VirtualPoolAddressesParams {
     pub fn new(page: usize, size: usize) -> Self { Self { page, size } }
 }
 

@@ -3,7 +3,7 @@
 //! Names and fields intentionally mirror the upstream wire contract.
 #![allow(missing_docs, reason = "raw response models mirror the upstream API contract")]
 
-use crate::api::types::Asset;
+use crate::api::types::PublicToken;
 use serde::Deserialize;
 
 #[macro_export]
@@ -23,9 +23,9 @@ macro_rules! unwrap_response {
 #[derive(Deserialize, Debug, Clone)]
 #[non_exhaustive]
 pub enum Response {
-    Assets(Vec<Asset>),
+    PublicTokens(Vec<PublicToken>),
     /// One page of raw TON addresses for discovered Virtual Pools.
-    Pools(Vec<String>),
+    VirtualPoolAddresses(Vec<String>),
     /// All raw TON addresses discovered across every Virtual Pool page.
-    AllPools(Vec<String>),
+    AllVirtualPoolAddresses(Vec<String>),
 }

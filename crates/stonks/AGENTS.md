@@ -14,9 +14,9 @@ changes.
 The crate exposes a thin typed client:
 
 - `StonksApiClient::builder().build()?`
-- `client.api.exec(Request::Assets)`
-- `client.api.exec(PoolsParams::new(page, size))`
-- `client.api.exec(Request::AllPools)`
+- `client.api.exec(Request::PublicTokens)`
+- `client.api.exec(VirtualPoolAddressesParams::new(page, size))`
+- `client.api.exec(Request::AllVirtualPoolAddresses)`
 - request parameters in `api/request.rs`
 - response enums and wire models in `api/response.rs` and `api/types.rs`
 
@@ -30,8 +30,8 @@ Treat these as public contracts:
 - `StonksApiClient`
 - `DEFAULT_API_URL`
 - `api::ApiClient`
-- `Request` and `PoolsParams`
-- `Response` and `Asset`
+- `Request` and `VirtualPoolAddressesParams`
+- `Response` and `PublicToken`
 - `unwrap_response!`
 
 Request parameter and response/model POD structs are `#[non_exhaustive]`; use
@@ -43,10 +43,10 @@ The API returns `buyTax` and `sellTax` as raw percentage integers. Do not
 convert them to basis points or apply an application-specific fee. Pool
 discovery returns raw TON address strings rather than hydrated pool objects.
 
-`Request::AllPools` owns zero-based pagination with a fixed page size of 100.
-It preserves response ordering and duplicates, stops after a short page,
-returns no partial result if a request fails, and must remain sequential unless
-the public behavior is deliberately redesigned.
+`Request::AllVirtualPoolAddresses` owns zero-based pagination with a fixed page
+size of 100. It preserves response ordering and duplicates, stops after a short
+page, returns no partial result if a request fails, and must remain sequential
+unless the public behavior is deliberately redesigned.
 
 ## Downstream Integration Example
 
@@ -56,10 +56,10 @@ use stonks_api_client::api_client::StonksApiClient;
 
 # async fn example() -> anyhow::Result<()> {
 let client = StonksApiClient::builder().build()?;
-let response = client.api.exec(Request::Assets).await?;
+let response = client.api.exec(Request::PublicTokens).await?;
 
 match response {
-    Response::Assets(assets) => println!("assets: {}", assets.len()),
+    Response::PublicTokens(tokens) => println!("public tokens: {}", tokens.len()),
     other => anyhow::bail!("unexpected Stonks response: {other:?}"),
 }
 # Ok(())

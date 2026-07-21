@@ -1,38 +1,40 @@
 use anyhow::{Context, Result};
-use stonks_api_client::api::{PoolsParams, Request};
+use stonks_api_client::api::{Request, VirtualPoolAddressesParams};
 use stonks_api_client::api_client::StonksApiClient;
 use stonks_api_client::unwrap_response;
 
 fn init_client() -> Result<StonksApiClient> { Ok(StonksApiClient::builder().build()?) }
 
 #[tokio::test]
-async fn test_assets() -> Result<()> {
+async fn test_public_tokens() -> Result<()> {
     let client = init_client()?;
-    let assets = unwrap_response!(Assets, client.api.exec(Request::Assets).await?)?;
-    let asset = assets.first().context("Stonks returned no public tokens")?;
+    let public_tokens = unwrap_response!(PublicTokens, client.api.exec(Request::PublicTokens).await?)?;
+    let public_token = public_tokens.first().context("Stonks returned no public tokens")?;
 
-    assert!(!asset.symbol.is_empty());
-    assert!(!asset.address.is_empty());
+    assert!(!public_token.symbol.is_empty());
+    assert!(!public_token.address.is_empty());
     Ok(())
 }
 
 #[tokio::test]
-async fn test_pool_page() -> Result<()> {
+async fn test_virtual_pool_addresses_page() -> Result<()> {
     let client = init_client()?;
-    let pools = unwrap_response!(Pools, client.api.exec(PoolsParams::new(0, 1)).await?)?;
-    let address = pools.first().context("Stonks returned no Virtual Pool addresses")?;
+    let addresses =
+        unwrap_response!(VirtualPoolAddresses, client.api.exec(VirtualPoolAddressesParams::new(0, 1)).await?)?;
+    let address = addresses.first().context("Stonks returned no Virtual Pool addresses")?;
 
-    assert!(pools.len() <= 1);
+    assert!(addresses.len() <= 1);
     assert!(!address.is_empty());
     Ok(())
 }
 
 #[tokio::test]
-async fn test_all_pools() -> Result<()> {
+async fn test_all_virtual_pool_addresses() -> Result<()> {
     let client = init_client()?;
-    let pools = unwrap_response!(AllPools, client.api.exec(Request::AllPools).await?)?;
+    let addresses =
+        unwrap_response!(AllVirtualPoolAddresses, client.api.exec(Request::AllVirtualPoolAddresses).await?)?;
 
-    assert!(!pools.is_empty());
-    assert!(pools.iter().all(|address| !address.is_empty()));
+    assert!(!addresses.is_empty());
+    assert!(addresses.iter().all(|address| !address.is_empty()));
     Ok(())
 }
