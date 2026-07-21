@@ -1,0 +1,23 @@
+[package]
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+name = "stonks_api_client"
+version = "0.1.0"
+description = "API client for Stonks public tokens and Virtual Pool discovery"
+
+[dependencies]
+# Internal
+api_clients_core.workspace = true
+
+# External
+serde.workspace = true
+derive_setters.workspace = true
+derive_more.workspace = true
+
+[dev-dependencies]
+tokio.workspace = true
+anyhow.workspace = true
+serde_json.workspace = true
+serde_qs.workspace = true

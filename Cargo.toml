@@ -5,6 +5,7 @@ members = [
     "crates/core",
     "crates/dedust",
     "crates/stonfi",
+    "crates/stonks",
     "crates/swap_coffee",
     "crates/tonco_api_client",
     "crates/bidask",
