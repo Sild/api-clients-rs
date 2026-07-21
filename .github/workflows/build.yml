@@ -38,6 +38,7 @@ jobs:
           for package in \
             api_clients_core \
             stonfi_api_client \
+            stonks_api_client \
             dedust_api_client \
             swap_coffee_api_client \
             tonco_api_client

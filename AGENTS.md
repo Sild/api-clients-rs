@@ -18,6 +18,8 @@ Root guidance applies to the whole workspace. Also read the crate-local
   common error/result types.
 - `stonfi_api_client` (`crates/stonfi/`): REST wrapper for STON.fi API v1 and
   public export endpoints.
+- `stonks_api_client` (`crates/stonks/`): REST wrapper for Stonks public-token
+  metadata and Virtual Pool address discovery.
 - `dedust_api_client` (`crates/dedust/`): REST wrapper for DeDust API v2.
 - `swap_coffee_api_client` (`crates/swap_coffee/`): REST wrapper for Swap Coffee
   API v1.
