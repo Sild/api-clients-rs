@@ -48,6 +48,9 @@ size of 100. It preserves response ordering and duplicates, stops after a short
 page, returns no partial result if a request fails, and must remain sequential
 unless the public behavior is deliberately redesigned.
 
+`VirtualPoolAddressesParams` uses fixed-width `u32` values for both `page` and
+`size`; do not replace wire pagination with target-width integer types.
+
 ## Downstream Integration Example
 
 ```rust

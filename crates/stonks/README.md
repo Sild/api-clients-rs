@@ -19,7 +19,8 @@ The minimum supported Rust version (MSRV) is 1.88.
 
 Run requests inside an async Tokio runtime. Pass
 [`VirtualPoolAddressesParams`] directly to the API client for one page, or use
-[`Request::AllVirtualPoolAddresses`] to load every page.
+[`Request::AllVirtualPoolAddresses`] to load every page. Page numbers are
+zero-based, and both pagination values use `u32`.
 
 ```rust,no_run
 use stonks_api_client::api::{Request, Response};

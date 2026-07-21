@@ -14,7 +14,7 @@ fn test_client_exposes_api_executor() -> anyhow::Result<()> {
 
 #[test]
 fn test_virtual_pool_addresses_params_serialize_to_upstream_query_names() -> anyhow::Result<()> {
-    let params = VirtualPoolAddressesParams::new(2, 50);
+    let params = VirtualPoolAddressesParams::new(2_u32, 50_u32);
 
     assert_eq!(serde_qs::to_string(&params)?, "page=2&size=50");
     Ok(())

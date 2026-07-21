@@ -9,7 +9,7 @@ pub use request::*;
 pub use response::*;
 pub use types::*;
 
-const ALL_VIRTUAL_POOL_ADDRESSES_PAGE_SIZE: usize = 100;
+const ALL_VIRTUAL_POOL_ADDRESSES_PAGE_SIZE: u32 = 100;
 const PUBLIC_TOKENS_PATH: &str = "api/deployments/public-tokens";
 const VIRTUAL_POOL_ADDRESSES_PATH: &str = "api/virtual-deployments/non-bonded-tokens";
 
@@ -57,7 +57,7 @@ impl ApiClient {
 
     async fn load_all_virtual_pool_addresses(&self) -> ApiClientsResult<Vec<String>> {
         let mut addresses = Vec::new();
-        let mut page = 0_usize;
+        let mut page = 0_u32;
 
         loop {
             let params = VirtualPoolAddressesParams::new(page, ALL_VIRTUAL_POOL_ADDRESSES_PAGE_SIZE);
@@ -72,10 +72,10 @@ impl ApiClient {
 
 fn append_virtual_pool_addresses_page(
     addresses: &mut Vec<String>,
-    page: &mut usize,
+    page: &mut u32,
     mut page_addresses: Vec<String>,
 ) -> ApiClientsResult<bool> {
-    let is_last_page = page_addresses.len() < ALL_VIRTUAL_POOL_ADDRESSES_PAGE_SIZE;
+    let is_last_page = page_addresses.len() < ALL_VIRTUAL_POOL_ADDRESSES_PAGE_SIZE as usize;
     let next_page = if is_last_page {
         None
     } else {
@@ -106,7 +106,7 @@ mod tests {
 
         assert!(!is_last_page);
         assert_eq!(page, 1);
-        assert_eq!(addresses.len(), ALL_VIRTUAL_POOL_ADDRESSES_PAGE_SIZE);
+        assert_eq!(addresses.len(), ALL_VIRTUAL_POOL_ADDRESSES_PAGE_SIZE as usize);
         Ok(())
     }
 
@@ -130,13 +130,13 @@ mod tests {
     #[test]
     fn test_virtual_pool_address_page_overflow_returns_error_without_appending() {
         let mut addresses = vec!["existing".to_string()];
-        let mut page = usize::MAX;
-        let page_addresses = vec!["new".to_string(); ALL_VIRTUAL_POOL_ADDRESSES_PAGE_SIZE];
+        let mut page = u32::MAX;
+        let page_addresses = vec!["new".to_string(); ALL_VIRTUAL_POOL_ADDRESSES_PAGE_SIZE as usize];
 
         let result = append_virtual_pool_addresses_page(&mut addresses, &mut page, page_addresses);
 
         assert!(result.is_err());
-        assert_eq!(page, usize::MAX);
+        assert_eq!(page, u32::MAX);
         assert_eq!(addresses, vec!["existing"]);
     }
 }
