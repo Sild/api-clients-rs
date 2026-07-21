@@ -24,6 +24,8 @@ macro_rules! unwrap_response {
 #[non_exhaustive]
 pub enum Response {
     Assets(Vec<Asset>),
+    /// One page of raw TON addresses for discovered Virtual Pools.
     Pools(Vec<String>),
+    /// All raw TON addresses discovered across every Virtual Pool page.
     AllPools(Vec<String>),
 }
