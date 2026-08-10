@@ -2,7 +2,7 @@
 //!
 //! Names and fields intentionally mirror the upstream wire contract.
 
-use crate::api::types::PublicToken;
+use crate::api::types::{JettonMetadata, PublicToken};
 use serde::Deserialize;
 
 /// Extract the expected payload from a Stonks [`Response`](crate::api::Response).
@@ -34,4 +34,6 @@ pub enum Response {
     VirtualPoolAddresses(Vec<String>),
     /// All raw TON addresses discovered across every Virtual Pool page.
     AllVirtualPoolAddresses(Vec<String>),
+    /// Jetton metadata returned for the requested Stonks deployment identifiers.
+    JettonMetadataBatch(Vec<JettonMetadata>),
 }

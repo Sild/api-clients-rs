@@ -3,7 +3,8 @@
 ## Scope
 
 This crate is `stonks_api_client`, a public Rust library that wraps Stonks
-public-token metadata and Virtual Pool address-discovery endpoints.
+public-token metadata, batch jetton metadata, and Virtual Pool address-discovery
+endpoints.
 
 Use the repository root `AGENTS.md` first, then this file. Use the
 `rust-library-review` skill for public API, docs, package, or agent-guidance
@@ -17,6 +18,7 @@ The crate exposes a thin typed client:
 - `client.api.exec(Request::PublicTokens)`
 - `client.api.exec(VirtualPoolAddressesParams::new(page, size))`
 - `client.api.exec(Request::AllVirtualPoolAddresses)`
+- `client.api.exec(JettonMetadataBatchRequest::new(ids))`
 - request parameters in `api/request.rs`
 - response enums and wire models in `api/response.rs` and `api/types.rs`
 
@@ -30,8 +32,8 @@ Treat these as public contracts:
 - `StonksApiClient`
 - `DEFAULT_API_URL`
 - `api::ApiClient`
-- `Request` and `VirtualPoolAddressesParams`
-- `Response` and `PublicToken`
+- `Request`, `VirtualPoolAddressesParams`, and `JettonMetadataBatchRequest`
+- `Response`, `PublicToken`, and `JettonMetadata`
 - `unwrap_response!`
 
 Request parameter and response/model POD structs are `#[non_exhaustive]`; use

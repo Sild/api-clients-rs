@@ -5,7 +5,7 @@ license.workspace = true
 repository.workspace = true
 name = "stonks_api_client"
 version = "0.1.0"
-description = "API client for Stonks public tokens and Virtual Pool discovery"
+description = "API client for Stonks public tokens, jetton metadata, and Virtual Pool discovery"
 
 [dependencies]
 # Internal

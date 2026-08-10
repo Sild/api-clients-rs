@@ -2,10 +2,10 @@
 
 Thin typed wrapper for the public [Stonks](https://app.stonks.cash) endpoints.
 
-Use this crate to load public-token tax metadata or discover Stonks Virtual
-Pool addresses. The crate preserves the raw tax percentages returned by
-Stonks; fee conversion, pool hydration, filtering, and routing belong in the
-application layer.
+Use this crate to load public-token tax metadata, batch jetton metadata, or
+discover Stonks Virtual Pool addresses. The crate preserves the raw values
+returned by Stonks; fee conversion, pool hydration, filtering, and routing
+belong in the application layer.
 
 ## Usage
 
@@ -47,6 +47,7 @@ match response {
 |-----------------------------------------------------------|-----------|
 | `/api/deployments/public-tokens`                          | ✅        |
 | `/api/virtual-deployments/non-bonded-tokens?page=&size=` | ✅        |
+| `/api/jetton-metadata/batch`                             | ✅        |
 
 Public request and response types are marked `#[non_exhaustive]` for semver
 headroom. Build public POD structs with `Default::default().with_<field>(...)`

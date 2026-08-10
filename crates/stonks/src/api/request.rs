@@ -18,6 +18,23 @@ pub enum Request {
     /// Load raw TON addresses from every Virtual Pool page sequentially.
     #[from(skip)]
     AllVirtualPoolAddresses,
+    /// Load jetton metadata for Stonks deployment identifiers in one request.
+    JettonMetadataBatch(JettonMetadataBatchRequest),
+}
+
+/// Stonks deployment identifiers requested from the batch metadata endpoint.
+#[derive(Debug, Clone, Default, PartialEq, Eq, Serialize, Setters)]
+#[setters(prefix = "with_")]
+#[non_exhaustive]
+pub struct JettonMetadataBatchRequest {
+    /// Decimal Stonks deployment identifiers.
+    pub ids: Vec<String>,
+}
+
+impl JettonMetadataBatchRequest {
+    /// Create a batch metadata request for the supplied deployment identifiers.
+    #[must_use]
+    pub fn new(ids: Vec<String>) -> Self { Self { ids } }
 }
 
 /// Pagination parameters for one Virtual Pool address page.
