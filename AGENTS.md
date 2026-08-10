@@ -19,8 +19,9 @@ Root guidance applies to the whole workspace. Also read the crate-local
 - `stonfi_api_client` (`crates/stonfi/`): REST wrapper for STON.fi API v1 and
   public export endpoints.
 - `stonks_api_client` (`crates/stonks/`): REST wrapper for Stonks public-token
-  metadata and Virtual Pool address discovery.
-- `dedust_api_client` (`crates/dedust/`): REST wrapper for the DeDust asset registry, API v4 pool registries, and legacy API v2 operations.
+  metadata, batch jetton metadata, and Virtual Pool address discovery.
+- `dedust_api_client` (`crates/dedust/`): REST wrapper for the DeDust asset
+  registry, API v4 pool registries, and legacy API v2 operations.
 - `swap_coffee_api_client` (`crates/swap_coffee/`): REST wrapper for Swap Coffee
   API v1.
 - `tonco_api_client` (`crates/tonco_api_client/`): GraphQL wrapper for Tonco

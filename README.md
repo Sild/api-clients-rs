@@ -9,7 +9,7 @@ MRs are welcome.
 | Service               | Client                                                   | Status      | Capabilities |
 |-----------------------|----------------------------------------------------------|-------------|--------------|
 | https://ston.fi       | [stonfi_api_client](crates/stonfi)                       | Supported   | STON.fi API v1 assets, pools, farms, routers, swap/liquidity simulation, wallet views, stats, transactions, and public export feeds. |
-| https://app.stonks.cash | [stonks_api_client](crates/stonks)                     | Supported   | Stonks public-token tax metadata and paginated Virtual Pool address discovery. |
+| https://app.stonks.cash | [stonks_api_client](crates/stonks)                     | Supported   | Stonks tax metadata, batch jetton metadata, and paginated Virtual Pool discovery. |
 | https://dedust.io     | [dedust_api_client](crates/dedust)                       | Supported   | DeDust asset metadata, v4 Classic/Stable/CPMM v2/Uranus pool registries, and legacy v2 operations. |
 | https://app.tonco.io/ | [tonco_api_client](crates/tonco_api_client)              | Supported   | Low-level Tonco Indexer GraphQL execution with caller-owned query/schema files and generated types. |
 | https://swap.coffee   | [swap_coffee_api_client](crates/swap_coffee)             | Supported   | Swap Coffee API v1 tokens and pools. |

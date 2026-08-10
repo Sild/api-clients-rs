@@ -1,5 +1,5 @@
 use anyhow::{Context, Result};
-use stonks_api_client::api::{Request, VirtualPoolAddressesParams};
+use stonks_api_client::api::{JettonMetadataBatchRequest, Request, VirtualPoolAddressesParams};
 use stonks_api_client::api_client::StonksApiClient;
 use stonks_api_client::unwrap_response;
 
@@ -36,5 +36,15 @@ async fn test_all_virtual_pool_addresses() -> Result<()> {
 
     assert!(!addresses.is_empty());
     assert!(addresses.iter().all(|address| !address.is_empty()));
+    Ok(())
+}
+
+#[tokio::test]
+async fn test_jetton_metadata_batch() -> Result<()> {
+    let client = init_client()?;
+    let metadata =
+        unwrap_response!(JettonMetadataBatch, client.api.exec(JettonMetadataBatchRequest::new(Vec::new())).await?)?;
+
+    assert!(metadata.is_empty());
     Ok(())
 }

@@ -12,6 +12,13 @@ pub use types::*;
 const ALL_VIRTUAL_POOL_ADDRESSES_PAGE_SIZE: u32 = 100;
 const PUBLIC_TOKENS_PATH: &str = "api/deployments/public-tokens";
 const VIRTUAL_POOL_ADDRESSES_PATH: &str = "api/virtual-deployments/non-bonded-tokens";
+const JETTON_METADATA_BATCH_PATH: &str = "api/jetton-metadata/batch";
+const JSON_CONTENT_TYPE: (&str, &str) = ("content-type", "application/json");
+
+#[derive(serde::Deserialize)]
+struct JettonMetadataBatchResponse {
+    metadata: Vec<JettonMetadata>,
+}
 
 /// Executes typed requests against the Stonks public API.
 #[derive(Clone)]
@@ -43,6 +50,12 @@ impl ApiClient {
             }
             Request::AllVirtualPoolAddresses => {
                 Response::AllVirtualPoolAddresses(self.load_all_virtual_pool_addresses().await?)
+            }
+            Request::JettonMetadataBatch(params) => {
+                let headers = [(JSON_CONTENT_TYPE.0.to_string(), JSON_CONTENT_TYPE.1.to_string())];
+                let response: JettonMetadataBatchResponse =
+                    self.executor.exec_post_body(JETTON_METADATA_BATCH_PATH, params, &headers).await?;
+                Response::JettonMetadataBatch(response.metadata)
             }
         };
         Ok(response)
