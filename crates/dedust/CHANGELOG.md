@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.7.2](https://github.com/Sild/api-clients-rs/compare/dedust_api_client-v0.7.1...dedust_api_client-v0.7.2) - 2026-08-12
+
+### Other
+
+- Api ni dedust pool screener ([#52](https://github.com/Sild/api-clients-rs/pull/52))
+
 ## [0.7.1](https://github.com/Sild/api-clients-rs/compare/dedust_api_client-v0.7.0...dedust_api_client-v0.7.1) - 2026-07-31
 
 ### Other
