@@ -11,7 +11,7 @@ pub const DEFAULT_ASSETS_URL: &str = "https://assets.dedust.io";
 /// Default base URL for DeDust API v2.
 pub const DEFAULT_API_V2_URL: &str = "https://api.dedust.io/v2";
 
-/// Default base URL for the DeDust API v4 pool registry.
+/// Default base URL for the DeDust API v4 pool-discovery service.
 pub const DEFAULT_API_V4_URL: &str = "https://mainnet.api.dedust.io/v4/api";
 
 /// DeDust service client with child clients for each upstream API surface.
@@ -22,7 +22,7 @@ pub struct DedustApiClient {
     pub assets: AssetsApiClient,
     /// DeDust API v2 execution client.
     pub v2: V2ApiClient,
-    /// DeDust API v4 pool-registry execution client.
+    /// DeDust API v4 pool-discovery execution client.
     pub v4: V4ApiClient,
 }
 
