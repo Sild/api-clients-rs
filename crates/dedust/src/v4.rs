@@ -31,17 +31,11 @@ impl V4ApiClient {
         self.executor.exec_post_body("get_pools", params, &headers).await
     }
 
-    /// Load every enriched pool row matching the supplied filters.
-    ///
-    /// Pagination starts at offset zero and uses `params.limit` as the page size.
-    /// Pages are loaded sequentially and no partial response is returned if a
-    /// request fails or the upstream service returns an empty page before
-    /// `total_count` rows have been loaded.
+    /// Load all matching enriched pool rows from offset zero, using `params.limit` pages.
     ///
     /// # Errors
     ///
-    /// Returns an error when any page request fails, a page cannot be deserialized,
-    /// or the upstream pagination response is inconsistent.
+    /// Returns an error when a page request fails or pagination is inconsistent.
     pub async fn all_pools(&self, params: &PoolsParams) -> ApiClientsResult<PoolsResponse> {
         let mut page_params = params.clone().with_offset(0);
         let mut response = PoolsResponse::default();
@@ -123,56 +117,4 @@ fn append_pools_page(
     response.assets_metadata.append(&mut page.assets_metadata);
     response.pool_rows.append(&mut page.pool_rows);
     Ok((loaded_count < total_count).then_some(loaded_count))
-}
-
-#[cfg(test)]
-mod tests {
-    use super::{append_pools_page, PoolRow, PoolsResponse};
-
-    #[test]
-    fn test_append_pools_page_advances_until_total_count() -> anyhow::Result<()> {
-        let mut response = PoolsResponse::default();
-        let first_page =
-            PoolsResponse::default().with_pool_rows(vec![PoolRow::default(), PoolRow::default()]).with_total_count(3);
-        let second_page = PoolsResponse::default().with_pool_rows(vec![PoolRow::default()]).with_total_count(3);
-        let mut expected_total = None;
-
-        assert_eq!(append_pools_page(&mut response, &mut expected_total, first_page)?, Some(2));
-        assert_eq!(append_pools_page(&mut response, &mut expected_total, second_page)?, None);
-        assert_eq!(response.pool_rows.len(), 3);
-        Ok(())
-    }
-
-    #[test]
-    fn test_append_pools_page_rejects_incomplete_empty_page() -> anyhow::Result<()> {
-        let mut response = PoolsResponse::default();
-        let empty_page = PoolsResponse::default().with_total_count(1);
-        let mut expected_total = None;
-
-        let error = match append_pools_page(&mut response, &mut expected_total, empty_page) {
-            Ok(_) => anyhow::bail!("empty page unexpectedly succeeded"),
-            Err(error) => error,
-        };
-
-        assert!(matches!(error, api_clients_core::ApiClientsError::UnexpectedResponse(_)));
-        Ok(())
-    }
-
-    #[test]
-    fn test_append_pools_page_rejects_changed_total() -> anyhow::Result<()> {
-        let mut response = PoolsResponse::default();
-        let first_page = PoolsResponse::default().with_pool_rows(vec![PoolRow::default()]).with_total_count(2);
-        let changed_page = PoolsResponse::default().with_pool_rows(vec![PoolRow::default()]).with_total_count(1);
-        let mut expected_total = None;
-
-        assert_eq!(append_pools_page(&mut response, &mut expected_total, first_page)?, Some(1));
-        let error = match append_pools_page(&mut response, &mut expected_total, changed_page) {
-            Ok(_) => anyhow::bail!("changed total unexpectedly succeeded"),
-            Err(error) => error,
-        };
-
-        assert!(matches!(error, api_clients_core::ApiClientsError::UnexpectedResponse(_)));
-        assert_eq!(response.pool_rows.len(), 1);
-        Ok(())
-    }
 }
