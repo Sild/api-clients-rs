@@ -35,7 +35,8 @@ Treat these as public contracts:
 - `V2Request`
 - `RoutingPlanParams`
 - `V2Response` and public response/type structs
-- `V4ApiClient`, `V4Request`, `V4Response`, `PoolsParams`, and v4 pool wire models
+- `V4ApiClient`, `V4Request`, `V4Response`, `PoolsParams`,
+  `V4ApiClient::pools`, `V4ApiClient::all_pools`, and v4 pool wire models
 - `unwrap_response!`
 - `unwrap_assets_response!`
 - `unwrap_v4_response!`
@@ -59,14 +60,18 @@ Tests in `tests/test_assets.rs`, `tests/test_api_v2.rs`, and
 `tests/test_api_v4.rs` hit the live DeDust services. Prefer assertions that
 prove endpoint support and response parsing without relying on volatile asset
 or pool counts, routing amounts, or ordering.
+`test_all_pools` is ignored by default because it makes multiple sequential live
+requests; run it explicitly when changing automatic pagination.
 
 The asset registry uses friendly TON addresses and absolute image URLs. The v4
 pool endpoints use raw `workchain:hex_hash` addresses and asset identifiers such
 as `native` and `jetton:0:<hash>`. The `get_pools_all*` registries provide static
 discovery/configuration records. The frontend-oriented `POST /get_pools`
 screener provides grouped pools with TVL, volume, APR, reserves, fees, rewards,
-and embedded asset metadata; its page limit is currently 100. Keep decimal and
-raw integer values as strings. Keep legacy v2 asset and pool operations
+and embedded asset metadata; its page limit and the `PoolsParams` default are
+currently 100. `all_pools` starts at offset zero, loads pages sequentially, and
+returns no partial response on failure. Keep decimal and raw integer values as
+strings. Keep legacy v2 asset and pool operations
 available for backward compatibility, but do not recommend them for new
 registry integrations.
 
@@ -85,7 +90,7 @@ use dedust_api_client::v4::PoolsParams;
 let client = DedustApiClient::builder().build()?;
 let assets_response = client.assets.exec(AssetsRequest::List).await?;
 let params = PoolsParams::new().with_limit(100);
-let pools_response = client.v4.pools(&params).await?;
+let pools_response = client.v4.all_pools(&params).await?;
 
 match assets_response {
     AssetsResponse::List(assets) => println!("assets: {}", assets.len()),
@@ -104,6 +109,7 @@ domain layer.
 
 ```bash
 cargo test -p dedust_api_client --tests
+cargo test -p dedust_api_client --test test_api_v4 test_all_pools -- --ignored --exact
 cargo +nightly fmt
 cargo clippy -p dedust_api_client --all-targets --all-features -- -D warnings
 RUSTDOCFLAGS="-D warnings" cargo doc -p dedust_api_client --no-deps

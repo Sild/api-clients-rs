@@ -43,7 +43,7 @@ match pools_response {
 }
 
 let params = PoolsParams::new().with_limit(100);
-let screened_page = client.v4.pools(&params).await?;
+let screened_page = client.v4.all_pools(&params).await?;
 println!("screened pool rows: {}", screened_page.total_count);
 # Ok(())
 # }
@@ -64,13 +64,14 @@ The default asset-registry origin is `https://assets.dedust.io`.
 
 ## API v4 Pool Discovery
 
-| Method | Endpoint                  | Request                            | Response                      |
-|--------|---------------------------|------------------------------------|-------------------------------|
-| POST   | /get_pools                | `V4ApiClient::pools(&PoolsParams)` | `PoolsResponse`               |
-| GET    | /get_pools_allclassic     | `V4Request::AllClassicPools`       | `V4Response::AllClassicPools` |
-| GET    | /get_pools_allstable      | `V4Request::AllStablePools`        | `V4Response::AllStablePools`  |
-| GET    | /get_pools_allcpmm        | `V4Request::AllCpmmPools`          | `V4Response::AllCpmmPools`    |
-| GET    | /get_pools_alluranus      | `V4Request::AllUranusPools`        | `V4Response::AllUranusPools`  |
+| Method | Endpoint                  | Request                                | Response                      |
+|--------|---------------------------|----------------------------------------|-------------------------------|
+| POST   | /get_pools                | `V4ApiClient::pools(&PoolsParams)`     | One `PoolsResponse` page      |
+| POST   | /get_pools, all pages     | `V4ApiClient::all_pools(&PoolsParams)` | Aggregated `PoolsResponse`    |
+| GET    | /get_pools_allclassic     | `V4Request::AllClassicPools`           | `V4Response::AllClassicPools` |
+| GET    | /get_pools_allstable      | `V4Request::AllStablePools`            | `V4Response::AllStablePools`  |
+| GET    | /get_pools_allcpmm        | `V4Request::AllCpmmPools`              | `V4Response::AllCpmmPools`    |
+| GET    | /get_pools_alluranus      | `V4Request::AllUranusPools`            | `V4Response::AllUranusPools`  |
 
 The default v4 origin is `https://mainnet.api.dedust.io/v4/api`.
 `POST /get_pools` is the enriched screener used by the DeDust web application.
@@ -78,6 +79,10 @@ It returns asset-pair rows with nested pools, TVL, volume, APR, reserves, fees,
 rewards, and embedded asset metadata. `total_count` counts grouped rows rather
 than nested pools, and the current upstream page limit is 100. Decimal and raw
 integer amounts remain strings to preserve the wire representation.
+`PoolsParams::new()` uses that 100-row limit. `all_pools` resets the offset to
+zero, loads pages sequentially using the configured limit, merges embedded asset
+metadata, and returns no partial response if a page fails or pagination is
+inconsistent.
 
 The four `get_pools_all*` endpoints return much larger discovery and
 configuration registries without the screener's dynamic enrichment. Uranus

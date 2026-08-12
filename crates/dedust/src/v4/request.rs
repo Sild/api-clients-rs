@@ -56,7 +56,8 @@ pub struct PoolsParams {
 }
 
 impl PoolsParams {
-    /// Create parameters matching the DeDust web application's default pool listing.
+    /// Create parameters using the largest upstream page size and the web application's sort defaults.
+    #[must_use]
     pub fn new() -> Self { Self::default() }
 }
 
@@ -64,7 +65,7 @@ impl Default for PoolsParams {
     fn default() -> Self {
         Self {
             offset: 0,
-            limit: 25,
+            limit: 100,
             sort_by: "volume_24h".to_owned(),
             sort_direction: "desc".to_owned(),
             wallet_address: None,
