@@ -9,5 +9,5 @@ pub mod api_client;
 pub mod assets;
 /// DeDust API v2 requests, responses, and wire models.
 pub mod v2;
-/// DeDust API v4 pool-registry requests, responses, and wire models.
+/// DeDust API v4 pool-discovery requests, responses, and wire models.
 pub mod v4;

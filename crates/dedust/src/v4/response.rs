@@ -22,7 +22,7 @@ macro_rules! unwrap_v4_response {
     };
 }
 
-/// A typed response returned by the DeDust API v4 pool-registry client.
+/// A typed response returned for a DeDust API v4 registry request.
 #[derive(Deserialize, Debug, Clone)]
 #[non_exhaustive]
 pub enum V4Response {

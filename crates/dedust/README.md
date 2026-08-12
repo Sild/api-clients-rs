@@ -1,7 +1,7 @@
 # dedust_api_client
 
 Thin typed wrapper for the [DeDust](https://dedust.io/) asset registry, API v4
-pool registries, and legacy API v2.
+pool discovery endpoints, and legacy API v2.
 
 Use this crate when an application needs raw typed access to DeDust asset
 metadata, pool discovery/configuration, pool trades, or routing plans. The crate
@@ -25,7 +25,7 @@ arm because they are non-exhaustive.
 ```rust,no_run
 use dedust_api_client::api_client::DedustApiClient;
 use dedust_api_client::assets::{AssetsRequest, AssetsResponse};
-use dedust_api_client::v4::{V4Request, V4Response};
+use dedust_api_client::v4::{PoolsParams, V4Request, V4Response};
 
 # async fn example() -> Result<(), Box<dyn std::error::Error>> {
 let client = DedustApiClient::builder().build()?;
@@ -41,14 +41,18 @@ match pools_response {
     V4Response::AllCpmmPools(pools) => println!("CPMM v2 pools: {}", pools.len()),
     _ => println!("unexpected DeDust v4 response variant"),
 }
+
+let params = PoolsParams::new().with_limit(100);
+let screened_page = client.v4.pools(&params).await?;
+println!("screened pool rows: {}", screened_page.total_count);
 # Ok(())
 # }
 ```
 
 The asset registry returns friendly TON addresses and absolute image URLs. The
-v4 pool registries return raw `workchain:hex_hash` addresses and asset strings
-such as `native` and `jetton:0:<hash>`. Applications own any address conversion,
-metadata joins, and dynamic pool-state hydration.
+v4 endpoints return raw `workchain:hex_hash` addresses and asset strings such as
+`native` and `jetton:0:<hash>`. Applications own any address conversion and
+domain normalization.
 
 ## Asset Registry
 
@@ -58,20 +62,45 @@ metadata joins, and dynamic pool-state hydration.
 
 The default asset-registry origin is `https://assets.dedust.io`.
 
-## API v4 Pool Registries
+## API v4 Pool Discovery
 
-| Method | Endpoint                  | Request                            | Response                           |
-|--------|---------------------------|------------------------------------|------------------------------------|
-| GET    | /get_pools_allclassic     | `V4Request::AllClassicPools`       | `V4Response::AllClassicPools`      |
-| GET    | /get_pools_allstable      | `V4Request::AllStablePools`        | `V4Response::AllStablePools`       |
-| GET    | /get_pools_allcpmm        | `V4Request::AllCpmmPools`          | `V4Response::AllCpmmPools`         |
-| GET    | /get_pools_alluranus      | `V4Request::AllUranusPools`        | `V4Response::AllUranusPools`       |
+| Method | Endpoint                  | Request                            | Response                      |
+|--------|---------------------------|------------------------------------|-------------------------------|
+| POST   | /get_pools                | `V4ApiClient::pools(&PoolsParams)` | `PoolsResponse`               |
+| GET    | /get_pools_allclassic     | `V4Request::AllClassicPools`       | `V4Response::AllClassicPools` |
+| GET    | /get_pools_allstable      | `V4Request::AllStablePools`        | `V4Response::AllStablePools`  |
+| GET    | /get_pools_allcpmm        | `V4Request::AllCpmmPools`          | `V4Response::AllCpmmPools`    |
+| GET    | /get_pools_alluranus      | `V4Request::AllUranusPools`        | `V4Response::AllUranusPools`  |
 
-The default v4 origin is `https://mainnet.api.dedust.io/v4/api`. These endpoints
-return discovery and configuration records. They do not include v2 fields such
-as reserves, liquidity-token supply, logical time, last price, volume, or
-accumulated fees. Uranus records identify launchpad tokens and fundraising
-configuration rather than ordinary two-asset pools.
+The default v4 origin is `https://mainnet.api.dedust.io/v4/api`.
+`POST /get_pools` is the enriched screener used by the DeDust web application.
+It returns asset-pair rows with nested pools, TVL, volume, APR, reserves, fees,
+rewards, and embedded asset metadata. `total_count` counts grouped rows rather
+than nested pools, and the current upstream page limit is 100. Decimal and raw
+integer amounts remain strings to preserve the wire representation.
+
+The four `get_pools_all*` endpoints return much larger discovery and
+configuration registries without the screener's dynamic enrichment. Uranus
+records identify launchpad tokens and fundraising configuration rather than
+ordinary two-asset pools.
+
+`POST /get_pools` and the other UI operations below are observed web-application
+interfaces, not endpoints documented in DeDust's public developer reference.
+They may change without a public API compatibility notice.
+
+### Observed but unsupported web-application operations
+
+The current DeDust frontend also calls these v4 endpoint groups, which this
+crate does not yet expose:
+
+| Area | Endpoints |
+|------|-----------|
+| Pool lookup | `POST /v4/api/get_pair_pools`, `POST /v4/api/pools/summary`, `GET /v4/api/pools/{address}` |
+| Pool analytics | `GET /v4/api/chart`, `GET /v4/api/coin_transactions` |
+| Assets | `GET /v4/api/coins/{asset}/resolver` |
+| Positions | `GET /v4/api/pools/{pool}/providers`, `GET /v4/api/pools/{pool}/liquidity_position/{wallet}` |
+| Portfolio | `GET /v4/api/portfolio/{wallet}`, `GET /v4/api/portfolio/{wallet}/earnings` |
+| Router | `GET /v4/router/assets`, `GET /v4/router/memepads-assets`, `POST /v4/router/quote`, `POST /v4/router/swap` |
 
 ## Legacy API v2
 

@@ -9,7 +9,9 @@ pub use request::*;
 pub use response::*;
 pub use types::*;
 
-/// Executes typed requests against the DeDust API v4 pool registry.
+const JSON_CONTENT_TYPE: (&str, &str) = ("content-type", "application/json");
+
+/// Executes typed requests against the DeDust API v4 pool-discovery service.
 #[derive(Clone)]
 pub struct V4ApiClient {
     executor: Arc<Executor>,
@@ -18,7 +20,18 @@ pub struct V4ApiClient {
 impl V4ApiClient {
     pub(crate) fn new(executor: Arc<Executor>) -> Self { Self { executor } }
 
-    /// Execute a DeDust v4 pool-registry request and return its matching response variant.
+    /// Load a filtered page of enriched pool rows used by the DeDust web application.
+    ///
+    /// # Errors
+    ///
+    /// Returns an error when transport, status handling, request serialization, or
+    /// response deserialization fails.
+    pub async fn pools(&self, params: &PoolsParams) -> ApiClientsResult<PoolsResponse> {
+        let headers = [(JSON_CONTENT_TYPE.0.to_owned(), JSON_CONTENT_TYPE.1.to_owned())];
+        self.executor.exec_post_body("get_pools", params, &headers).await
+    }
+
+    /// Execute a DeDust v4 registry request and return its matching response variant.
     ///
     /// # Errors
     ///
