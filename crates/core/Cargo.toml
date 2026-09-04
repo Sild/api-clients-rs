@@ -1,6 +1,6 @@
 [package]
 name = "api_clients_core"
-version = "0.3.0"
+version = "0.3.1"
 description = "core API clients features for various services"
 readme = "README.md"
 edition.workspace = true
