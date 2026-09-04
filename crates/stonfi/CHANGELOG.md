@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.9.1](https://github.com/Sild/api-clients-rs/compare/stonfi_api_client-v0.9.0...stonfi_api_client-v0.9.1) - 2026-09-04
+
+### Fixed
+
+- *(stonfi)* stop sending removed pools query ([#54](https://github.com/Sild/api-clients-rs/pull/54))
+
 ## [0.9.0](https://github.com/Sild/api_clients_rs/compare/stonfi_api_client-v0.8.0...stonfi_api_client-v0.9.0) - 2026-07-13
 
 ### Other
