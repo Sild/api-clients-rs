@@ -27,6 +27,13 @@ async fn test_swap_simulate_new_defaults_to_dex_v2() -> Result<()> {
     Ok(())
 }
 
+#[test]
+fn test_pools_params_omit_removed_dex_v2_parameter() -> Result<()> {
+    let params = PoolsParams::default().with_dex_v2(false);
+    assert_eq!(serde_json::to_value(params)?, serde_json::json!({}));
+    Ok(())
+}
+
 #[tokio::test]
 #[ignore = "assets returns the full asset catalog; run explicitly when checking this heavy endpoint"]
 async fn test_assets() -> Result<()> {

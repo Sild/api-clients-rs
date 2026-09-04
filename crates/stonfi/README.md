@@ -115,5 +115,9 @@ or request parameter `new()` constructors, pass request parameters directly to
 `Into<ExportRequest>` is implemented, and include a wildcard arm when matching
 response enums.
 
+`/v1/pools` no longer accepts the legacy `dex_v2` query parameter. The
+`PoolsParams::dex_v2` field and its setter remain available for source
+compatibility, but the client does not send the value.
+
 Live API tests hit STON.fi directly. Asset metadata, pool counts, prices,
 transaction state, and optional transaction fields can drift with upstream data.

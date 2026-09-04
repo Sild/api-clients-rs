@@ -6,3 +6,4 @@ target/
 .vscode
 .worktrees
 .DS_Store
+Cargo.lock

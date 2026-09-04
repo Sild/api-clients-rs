@@ -178,6 +178,11 @@ impl Default for ReverseSwapSimulateParams {
 #[setters(prefix = "with_")]
 #[non_exhaustive]
 pub struct PoolsParams {
+    /// Legacy option retained for source compatibility.
+    ///
+    /// STON.fi no longer accepts `dex_v2` on `/v1/pools`, so this value is not
+    /// sent to the server.
+    #[serde(skip)]
     pub dex_v2: bool,
 }
 

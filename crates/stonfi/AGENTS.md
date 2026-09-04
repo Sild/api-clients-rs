@@ -58,6 +58,8 @@ live response before changing client code.
 
 Known recent contract observations:
 
+- `/v1/pools` accepts no query parameters. `PoolsParams::dex_v2` is retained
+  for downstream source compatibility but must not be serialized or sent.
 - Native TON metadata has returned `display_name = "Gram"` and
   `symbol = "GRAM"`.
 - Old transaction query fixtures may return no `tx_id`; avoid unwrapping
