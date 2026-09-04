@@ -69,8 +69,8 @@ impl V1ApiClient {
             V1Request::PoolQuery(params) => {
                 V1Response::PoolQuery(self.executor.exec_post_body("pools/query", params, &[]).await?)
             },
-            V1Request::Pools(params) => {
-                V1Response::Pools(self.executor.exec_get_extra("pools", params, &[]).await?)
+            V1Request::Pools(_) => {
+                V1Response::Pools(self.executor.exec_get("pools").await?)
             },
             V1Request::PoolsByMarket(params) => {
                 let path = format!("pools/by_market/{}/{}", params.asset0_address, params.asset1_address);
